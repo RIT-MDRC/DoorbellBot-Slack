@@ -23,10 +23,10 @@ This app can only run when the roomba server is on. It should, however, handle e
 It is possible tokens may need to be updated. I don't know how to do that. If it has to happen I wish you good luck.
 
 ## To Do
-Add safe disconnect handling
-Update IP to raspberry pi IP
-Figure out if tokens get updated
-Make bash script to run app
+* Add safe disconnect handling
+* Update IP to raspberry pi IP
+* Figure out if tokens get updated
+* Make bash script to run app
 
 ## Author
 Cameron Robinson
