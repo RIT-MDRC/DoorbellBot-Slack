@@ -12,28 +12,34 @@ import requests
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
 
 
-@app.command("/door")
-def door_command(ack, body):
+def http_call(path):
     try:
-        response = requests.get(f'http://{os.environ["IP_ADDRESS"]}/door')
+        response = requests.get(f'http://{os.environ["IP_ADDRESS"]}/{path}')
         out = response.text
-    except: # I want this to handle a broad range of errors ~CR
+    except:  # I want this to handle a broad range of errors ~CR
         out = "Oops! Something went wrong"
     if response.status_code != 200:
         out = "Oops! Something went wrong"
+    return out
+
+
+@app.command("/roomba-status")
+def door_command(ack, body):
+    out = http_call("status")
+    user_id = body["user_id"]
+    ack(f"{out}, <@{user_id}>!")
+
+
+@app.command("/door")
+def door_command(ack, body):
+    out = http_call("door")
     user_id = body["user_id"]
     ack(f"{out}, <@{user_id}>!")
 
 
 @app.command("/elevator")
 def elevator_command(ack, body):
-    try:
-        response = requests.get(f'http://{os.environ["IP_ADDRESS"]}/elevator')
-        out = response.text
-    except:
-        out = "Oops! Something went wrong"
-    if response.status_code != 200:
-        out = "Oops! Something went wrong"
+    out = http_call("elevator")
     user_id = body["user_id"]
     ack(f"{out}, <@{user_id}>!")
 
