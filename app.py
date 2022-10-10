@@ -12,7 +12,7 @@ app = App(token=os.environ["SLACK_BOT_TOKEN"])
 @app.command("/door")
 def door_command(ack, body, client):
     try:
-        response = requests.get('http://129.21.121.208:8080/door')
+        response = requests.get(f'http://{os.environ["IP_ADDRESS"]}/door')
         out = response.text
     except:
         out = "Oops! Something went wrong"
@@ -23,7 +23,7 @@ def door_command(ack, body, client):
 @app.command("/elevator")
 def elevator_command(ack, body):
     try:
-        response = requests.get('http://129.21.121.208:8080/elevator')
+        response = requests.get(f'http://{os.environ["IP_ADDRESS"]}/elevator')
         out = response.text
     except:
         out = "Oops! Something went wrong"
