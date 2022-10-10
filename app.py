@@ -10,17 +10,25 @@ app = App(token=os.environ["SLACK_BOT_TOKEN"])
 
 
 @app.command("/door")
-def door_command(ack, body):
-    response = requests.get('http://129.21.121.208:8080/door')
+def door_command(ack, body, client):
+    try:
+        response = requests.get('http://129.21.121.208:8080/door')
+        out = response.text
+    except:
+        out = "Oops! Something went wrong"
     user_id = body["user_id"]
-    ack(f"{response.text}, <@{user_id}>!")
+    ack(f"{out}, <@{user_id}>!")
 
 
 @app.command("/elevator")
 def elevator_command(ack, body):
-    response = requests.get('http://129.21.121.208:8080/elevator')
+    try:
+        response = requests.get('http://129.21.121.208:8080/elevator')
+        out = response.text
+    except:
+        out = "Oops! Something went wrong"
     user_id = body["user_id"]
-    ack(f"{response.text}, <@{user_id}>!")
+    ack(f"{out}, <@{user_id}>!")
 
 
 if __name__ == "__main__":
