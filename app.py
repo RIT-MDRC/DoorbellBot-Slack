@@ -18,14 +18,15 @@ def http_call(path):
         out = response.text
     except:  # I want this to handle a broad range of errors ~CR
         out = "Oops! Something went wrong"
-    if response.status_code != 200:
-        out = "Oops! Something went wrong"
+    else:
+        if response.status_code != 200:
+            out = "Oops! Something went wrong"
     return out
 
 
 @app.command("/roomba-status")
 def door_command(ack, body):
-    out = http_call("status")
+    out = http_call("roomba_status")
     user_id = body["user_id"]
     ack(f"{out}, <@{user_id}>!")
 
